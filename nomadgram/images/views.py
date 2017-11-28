@@ -61,4 +61,13 @@ class LikeImage(APIView):
             new_like.save()
             return Response(status=status.HTTP_201_CREATED) 
 
- 
+class CommentOnImage(APIView):
+    
+    def post(self, request, image_id, format=None):
+        #print(request.data)
+
+        serializer = serializers.CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            return Resonse(data=serializer.errors, status=status.HTTP_201_CREATED) 
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
